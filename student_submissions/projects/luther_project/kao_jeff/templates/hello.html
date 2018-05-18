@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <title>LEBRON 2018: Least-Squares Error Based Regressor for Offensive and Defensive Numbers</title>
+       <link rel="stylesheet" media="screen" href ="static/bootstrap.min.css">
+       <link rel="stylesheet" href="static/bootstrap-theme.min.css">
+       <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+ 
+    </head>
+    <body>
+ 
+ 
+<div class="container">
+  <table style="width:70%;margin:auto;">
+  <tr>
+  <td style="width:30%">
+  <h4><span style="color:#f46524;">L</span>east-Squares <br/><span style="color:#f46524;">E</span>rror <br/><span style="color:#f46524;">B</span>ased <br/><span style="color:#f46524;">R</span>egressor for <br/><span style="color:#f46524;">O</span>ffensive and Defensive <br/><span style="color:#f46524;">N</span>umbers <br/><span style="color:#f46524;">2018</span></h4>
+  </td>
+  <td style="width:40%">
+  <form  action="" method="post" role="form">
+    {{ form.csrf }}
+    <div class="form-group">
+      <label for="name">Search:</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Enter a player's name to predict his stats in 2018.">
+    </div>
+    <button type="submit" class="btn btn-success">Submit</button>
+  </form>
+  </td>
+  </tr>
+  </table>
+    <div style="width:70%;margin:auto;">  
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+ 
+        {% for message in messages %}
+            {% if "Sorry" not in message[1]: %}
+                <div class="alert alert-info"><b>
+                {{ message[1] }}</b>
+                </div>
+            {% endif %}
+ 
+            {% if "Sorry" in message[1]: %}
+                <div class="alert alert-warning"><b>
+                {{ message[1] }}</b>
+                </div>
+            {% endif %}
+        {% endfor %}
+            {% endif %}
+        {% endwith %}
+ 
+    {% if row_exists %}
+
+  <h2>{{ name }} ({{pos_str}}, {{team_str}})</h2>
+  <p><b>Age:</b> {{age_str}} &nbsp;&nbsp;&nbsp;
+      <b>Experience:</b> {{exp_str}} &nbsp;&nbsp;&nbsp;
+      <b>Height:</b> {{ht_str}} &nbsp;&nbsp;&nbsp;
+      <b>Weight:</b> {{wt_str}}</p>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th style="width:50%">Statistic</th>
+        <th style="width:25%">2018 Prediction</th>
+        <th style="width:25%">Mean Absolute Error</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Points per game</td>
+        <td>{{ ppg_str }}</td>
+        <td>2.2</td>
+      </tr>
+      <tr>
+        <td>Field Goal %</td>
+        <td>{{ fgp_str }}</td>
+        <td>0.8/1.7</td>
+      </tr>
+      <tr>
+        <td>3 Point %</td>
+        <td>{{ fg3p_str }}</td>
+        <td>0.2/0.5</td>
+      </tr>
+      <tr>
+        <td>Free Throw %</td>
+        <td>{{ ftp_str }}</td>
+        <td>0.5/0.6</td>
+      </tr>
+      <tr>
+        <td>Rebounds</td>
+        <td>{{ rpg_str }}</td>
+        <td>0.9</td>
+      </tr>
+      <tr>
+        <td>Assists</td>
+        <td>{{ apg_str }}</td>
+        <td>0.6</td>
+      </tr>
+      <tr>
+        <td>Blocks per game</td>
+        <td>{{ bpg_str }}</td>
+        <td>0.2</td>
+      </tr>
+      <tr>
+        <td>Steals per game</td>
+        <td>{{ spg_str }}</td>
+        <td>0.2</td>
+      </tr>
+      <tr>
+        <td>Turnovers per game</td>
+        <td>{{ tpg_str }}</td>
+        <td>0.3</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+    {% endif %}
+</div>
+<br>   
+</div>
+</div>
+</body>
+</html>

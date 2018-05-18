@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block body %}
+ 
+<div class="block1">
+<h1>Welcome to Andre Johnson's Santander Product Predictor App</h1>
+  <h2>Predicting whether a client will add or terminate accounts </h2>
+  <p>
+	Select predict and json of client data to predict
+  </p>
+  <button type="button" onclick="window.location.href='{{ url_for( 'predict' ) }}';">Predict Page</button>
+  <button type="button" onclick="window.location.href='{{ url_for( 'd3' ) }}';">Account Type Profile Page</button>
+  <p>
+	
+	
+	
+	
+  </p>
+  <iframe src="https://giphy.com/embed/9EvzNG9HAVc64" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/tech-coding-machine-learning-9EvzNG9HAVc64">via GIPHY</a></p>
+
+</div>
+{% endblock %}

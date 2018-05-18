@@ -1,0 +1,17 @@
+{"type": "customer", "name": "Eugene", "age": 11}
+{"type": "customer", "name": "Fred", "age": 42}
+{"type": "purchase", "name": "Fred", "product": "apple"}
+{"type": "customer", "name": "Ann", "age": 24}
+{"type": "purchase", "name": "Fred", "product": "almonds"}
+{"type": "purchase", "name": "Eugene", "product": "battery"}
+{"type": "purchase", "name": "Eugene", "product": "elephant"}
+{"type": "purchase", "name": "Ann", "product": "battery"}
+{"type": "purchase", "name": "Greg", "product": "artichoke"}
+{"type": "purchase", "name": "Dana", "product": "apple"}
+{"type": "customer", "name": "Dana", "age": 51}
+{"type": "purchase", "name": "Dana", "product": "artichoke"}
+{"type": "purchase", "name": "Beth", "product": "clock"}
+{"type": "purchase", "name": "Fred", "product": "apple"}
+{"type": "purchase", "name": "Beth", "product": "lanyard"}
+{"type": "customer", "name": "Beth", "age": 92}
+{"type": "customer", "name": "Charlie", "age": 4}

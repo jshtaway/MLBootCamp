@@ -1,0 +1,27 @@
+tea,brewing_amount(g),brewing_volume(ml),brewing_temp(F),brewing_time(minutes),price_per_oz($),type,location,imgUrl
+aged baozhong 1960,5,150,203,2,25,oolong,wenshan_taiwan,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/1/9/1960_baozhong-01.jpg
+buddha's hand,6,150,203,2.5,23,oolong,alishan_taiwan,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/b/u/buddha_hand_01.jpg
+dragonwell,4,150,175,1,44,green,zhejiang_china,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/d/r/dragonwell-01_1.jpg
+eighteen,4,150,203,1.5,10.50,red,sun moon lake_yuchi township_taiwan,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/i/eighteen-01.jpg
+formosa dahongpao 1992,5,150,205,1.5,37.5,oolong,shan lin xi_taiwan,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/1/9/1992_formosa_dahongpao-01.jpg
+formosa yancha,6,150,205,2,23,oolong,shan lin xi_taiwan,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/f/o/formosa_yancha_1.jpg
+four seasons red,5,150,203,1,27,red,lishan_taiwan,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/f/o/four_seasons_red_1.jpg
+gold peony red,5,150,203,1.5,10,red,fujian_china,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/g/o/gold_peony_red-01.jpg
+gold peony rolled leaf,5,150,205,2,16,oolong,fujian_china,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/g/o/gold_peony_rolled-01.jpg
+gold peony twisted leaf,5,150,205,2,14,oolong,fujian_china,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/g/o/gold_peony_twisted-01.jpg
+golden needle,5,150,203,2,5,red,songxi county_china,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/g/o/golden_needle-01_1.jpg
+huang meigui,4,150,200,1.5,11,white,fujian_china,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/h/u/huang_meigui_1.jpg
+lishan orchid,6,150,203,2,23,oolong,lishan_taiwan,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/l/i/lishan_orchid_1.jpg
+lishan shuixian,5,150,205,1,25,oolong,lishan_taiwan,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/l/i/lishan_shuixian-01.jpg
+lishan winter sprout,6,150,205,1,25,oolong,lishan_taiwan,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/l/i/lishan_ws-01.jpg
+nantou dark,6,150,205,2,11,oolong,nantou county_taiwan,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/n/a/nantou_dark-01.jpg
+old tree shuixian,5,150,212,2,36,oolong,wuyi shan_fujian_china,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/l/old_tree_shuixian-01.jpg
+old tree yunnan red,5,150,208,1,11,red,fengqing county_lincang prefecture_yunnan_china,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/l/old_tree_yunnan-01.jpg
+red water shuixian,5,150,205,1,27.5,oolong,lishan_taiwan,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/r/e/red_water_shuixian-01.jpg
+red water tieguanyin,5,150,205,2,25,oolong,lishan_taiwan,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/r/e/red_water_tieguanyin-01.jpg
+shan lin xi winter sprout,6,150,205,1,18,oolong,shan lin xi_taiwan,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/a/san_lin_xi_ws-01.jpg
+snow jasmine,3,150,180,1,11,scented,mengding shan_sichuan_china,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/s/n/snow_jasmine-01.jpg
+twenty one,3,150,203,1.5,19,red,sun moon lake_yuchi township_taiwan,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/t/w/twenty_one-01.jpg
+wild mao feng,4,150,180,.5,12.5,green,shexian county_anhui_china,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/w/i/wild_maofeng-01.jpg
+winter shuixian,5,150,205,1,25,oolong,lishan_taiwan,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/w/i/winter_shuixian-01.jpg
+zhu ye qing,4,150,175,1,25,green,sichuan province_china,https://songtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/z/h/zhu_ye_qing-01.jpg

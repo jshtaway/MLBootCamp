@@ -1,0 +1,53 @@
+tea,brewing_amount(g),brewing_volume(ml),brewing_temp(F),brewing_time(minutes),price_per_oz($),type,location,imgUrl
+yunnan pearl,3.5,177,200,1.5,4.88,red,yunnan_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/y/u/yunnan_black5_2.jpg
+persimmon blossom (ya sai),3.5,177,205,1,30,oolong,chaozhou_guangdong_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/p/op-100_6_1.jpg
+tung ting mi xiang,5,177,205,2,12.5,oolong,nantou county_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/t/t/ttmx2015-3.jpg
+spring mao feng,2.5,177,185,1,7.5,green,songxi county_fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/r/org-maofeng.jpg
+da yu lin,5,177,195,4,30,oolong,da yu lin_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/f/of-153-1_1_1.jpg
+dragon pearl jasmine green,3.5,177,195,1,8,scented,fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/j/-/j-101-1_2.jpg
+ming qian dragonwell panan supreme,2,177,175,1,31,green,pan'an county_zhejiang_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/g/-/g-161-2-1_1_1.jpg
+white dragon pearl osmanthus,3.5,177,195,1,10,scented,china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/i/m/img_6964-3.jpg
+organic shou mei,3.5,177,195,2.5,2.63,white,fuding_fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/_/d/_dsc0146.jpg
+wild leaf menghai sheng puerh 2003,3.5,177,212,1,14,puerh,yunnan_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/m/emperor1998_4.14.11.jpg
+grand shou wild leaf lincang puerh 2006,4,177,212,1.5,9,puerh,yunnan_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/p/-/p-128-1_2.jpg
+golden monkey first pick,3.5,177,200,1,8.5,red,wuyi shan_fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/g/m/gm-firstpick-2015.jpg
+organic fuding silver needle,3.5,177,195,1.5,18.5,white,fuding_fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/w/-/w-102.jpg
+white dragon pearl premium,3.5,177,195,1,10,white,fuding_fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/j/-/j-110-1_1.jpg
+lishan spring,5,177,200,3,15.5,oolong,lishan_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/l/i/lishann.jpg
+wenshan baozhong,4,177,200,2,11.75,oolong,pinglin district_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/f/of-170-1_1.jpg
+pre-rain dragonwell,2,177,175,1,8.5,green,pan'an county_zhejiang_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/g/-/g-103-1_5.jpg
+fu shou shan,5,177,200,3,18,oolong,fu shou shan_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/f/u/fushou.jpg
+alishan,4.5,177,200,2.5,12.5,oolong,alishan_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/a/l/alishan.jpg
+jin xuan winter sprout,4.5,177,200,1.75,20,oolong,san lin xi_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/_/d/_dsc0566.jpg
+xin gong yi (new craft),3.5,177,195,2.5,9,white,fuding_fujian,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/w/-/w-104_1.jpg
+organic celadon pearl,3,177,180,.5,3,green,zhejiang_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/g/-/g-110-1_1.jpg
+fuding xue long (snow dragon),2.5,177,185,1,10,green,fuding_fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/g/-/g-165_4.jpg
+organic bai mu dan,3.5,177,195,2.5,7.25,white,fuding_fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/w/-/w-116-1_1.jpg
+organic cloud and mist,2,177,175,.5,4,green,fuding_fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/g/-/g-113-1_1.jpg
+dark roast tieguanyin,6,177,200,2,9,oolong,anxi county_fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/g/-/g-113-1_1.jpg
+monkey picked tieguanyin,5,177,200,2,6.5,oolong,anxi county_fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/m/o/monky-2015.jpg
+lishan winter,5,177,200,2.5,15.5,oolong,lishan_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/f/of-137-1.jpg
+san lin xi winter,5,177,200,2.5,14,oolong,san lin xi_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/f/of-142-1.jpg
+jin xuan,4.5,177,200,3,10,oolong,alishan_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/f/of-110-1_1.jpg
+tung ting spring,5,177,200,1.5,6,oolong,nantou county_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/f/of-100-1_1.jpg
+tung ting dark roast,5,177,200,1,7.5,oolong,nantou county_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/f/of-101-1_1.jpg
+gunpowder,2,177,180,.5,2,green,zhejiang_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/g/-/g-135-1_2.jpg
+mi lan xiang (honey orchid),3.5,177,205,1,15,oolong,chaozhou_guangdong_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/p/op-110_5.jpg
+aged tieguanyin ca. 1986,4,177,200,1.5,15,oolong,anxi county_fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/t/g/tgy_ca.86_2.jpg
+heritage grand scarlet robe,3.5,177,200,1.334,19,oolong,wuyi shan_fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/w/ow-121-1_2.jpg
+heritage golden buddha,3.5,177,200,1,12.5,oolong,wuyi shan_fujian,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/w/ow-151-1_1.jpg
+lishan hong mi xiang (honey fragrance),3.5,177,195,1,30,red,lishan_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/_/d/_dsc0606-2_1_1.jpg
+formosa red native cultivar mi xiang,3.5,177,205,1.75,12.5,red,nantou county_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/_/d/_dsc0598-2_2.jpg
+formosa red #18 mi xiang,3.5,177,205,1.75,12.5,red,nantou county_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/b/-/b-116-1_1.jpg
+organic formosa red assam,3.5,177,205,1.75,10,red,nantou county_taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/b/-/b-118_1.jpg
+three cultivar red,3.5,177,205,2,9,red,fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/b/-/b-119_2_2.jpg
+gold thread reserve,3.5,177,200,1.5,13,red,yunnan_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/g/o/goldthreadreserve_15.11.19_1.jpg
+organic golden monkey,3.5,177,200,1,3.5,red,wuyi shan_fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/b/-/b-112-1.jpg
+wild leaf sheng puerh 1998,4,177,212,2,15,puerh,yunnan_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/p/-/p-205-1.jpg
+emperor puerh 1998,4,177,212,1,11.5,puerh,yunnan_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/p/-/p-300-1.jpg
+jasmine mao jian,3.5,177,185,1.5,2.63,scented,fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/j/-/j-160-1.jpg
+rose black,3.5,177,205,1,3,scented,guangdong_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/b/a/ba-105-1.jpg
+dragon pearl jasmine supreme,3.5,177,195,1,10,scented,fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/j/-/j-101-1.jpg
+organic dragon pearl jasmine,3.5,177,195,1,6.25,scented,fujian_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/j/-/j-100-1.jpg
+tung ting ginseng,5,177,200,1.5,8.5,oolong,taiwan,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/o/f/ofa-105-1.jpg
+lychee black,3.5,177,205,1,3,scented,guangdong_china,http://www.redblossomtea.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/b/a/ba-100-1.jpg

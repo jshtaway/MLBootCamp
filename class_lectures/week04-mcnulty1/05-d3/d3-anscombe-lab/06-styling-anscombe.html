@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>D3: Anscombe's Quartet</title>
+    <meta charset="utf-8">
+
+    <style type="text/css">
+      /*css to go here*/
+      body {
+        font-family: arial, sans;
+        width: 720px;
+        margin: 20px auto;
+      }
+      svg {
+        /*border:1px solid #f0f;*/
+      }
+      .axis text {
+        font-size: 12px;
+        fill: #777;
+      }
+      .axis path {
+        display: none;
+      }
+      .axis line {
+        stroke-width:1px;
+        stroke: #ccc;
+        stroke-dasharray: 2px 2px;
+      }
+      .anscombe-circle-group text {
+        fill: #aaa;
+        font-size: 11px;
+      }
+      .anscombe-circle-group circle {
+        fill: red;
+        stroke: #fff;
+        stroke-width:1px;
+      }
+    </style>
+
+  <body>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script>
+    //JS to go here
+    var data = [
+      {"group": "II", "x":10, "y" : 9.14},
+      {"group": "II", "x":8, "y" : 8.14},
+      {"group": "II", "x":13, "y" : 8.74},
+      {"group": "II", "x":9, "y" : 8.77},
+      {"group": "II", "x":11, "y" : 9.26},
+      {"group": "II", "x":14, "y" : 8.1},
+      {"group": "II", "x":6, "y" : 6.13},
+      {"group": "II", "x":4, "y" : 3.1},
+      {"group": "II", "x":12, "y" : 9.13},
+      {"group": "II", "x":7, "y" : 7.26},
+      {"group": "II", "x":5, "y" : 4.74}
+    ];
+    var margin = {top: 20, right: 40, bottom: 20, left: 10};
+
+    var width = 720 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+
+    // Scales
+    var x = d3.scaleLinear()
+        .range([0, width])
+        .domain([4, 15]);
+
+    var y = d3.scaleLinear()
+        .range([height, 0])
+        .domain([2, 11]);
+
+    // Define Axes
+    var xAxis = d3.axisBottom()
+        .scale(x)
+        .tickSize(-height)
+        .tickPadding(8);
+
+    var yAxis = d3.axisRight()
+        .scale(y)
+        .tickSize(-width)
+        .tickPadding(8);
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + (height) + ")")
+        .call(xAxis);
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(" + (width) + ",0)")
+        .call(yAxis);
+
+    var circleGroup = svg.selectAll(".anscombe-circle-group")
+        .data(data)
+      .enter()
+        .append("g")
+        .attr("class", "anscombe-circle-group")
+        .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+
+    circleGroup.append("circle")
+        .attr("r", 5);
+
+    circleGroup.append("text")
+        .text(function(d) { return "(" + d.x + "," + d.y + ")"; })
+        .attr("dx", 6);
+    </script>
+  </body>
+</head>

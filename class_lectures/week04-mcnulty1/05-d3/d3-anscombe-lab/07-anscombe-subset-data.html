@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>D3: Anscombe's Quartet</title>
+    <meta charset="utf-8">
+
+    <style type="text/css">
+      /*css to go here*/
+      body {
+        font-family: arial, sans;
+        width: 720px;
+        margin: 20px auto;
+      }
+      svg {
+        /*border:1px solid #f0f;*/
+      }
+      .axis text {
+        font-size: 12px;
+        fill: #777;
+      }
+      .axis path {
+        display: none;
+      }
+      .axis line {
+        stroke-width:1px;
+        stroke: #ccc;
+        stroke-dasharray: 2px 2px;
+      }
+      .anscombe-circle-group text {
+        fill: #aaa;
+        font-size: 11px;
+      }
+      .anscombe-circle-group circle {
+        fill: red;
+        stroke: #000;
+        stroke-width:1px;
+      }
+    </style>
+
+  <body>
+    <button class="button">I</button>
+    <button class="button">II</button>
+    <button class="button">III</button>
+    <button class="button">IV</button>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script>
+    //JS to go here
+    var margin = {top: 20, right: 40, bottom: 20, left: 10};
+
+    var width = 720 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+
+    // Scales
+    var x = d3.scaleLinear()
+        .range([0, width])
+        .domain([4, 15]);
+
+    var y = d3.scaleLinear()
+        .range([height, 0])
+        .domain([2, 11]);
+
+    var colorScale = d3.scaleOrdinal()
+                      // .domain(["I", "II", "III", "IV"])
+                      .range(["red", "blue", "green", "yellow"]);
+
+    // Define Axes
+    var xAxis = d3.axisBottom()
+        .scale(x)
+        .tickSize(-height)
+        .tickPadding(8);
+
+    var yAxis = d3.axisRight()
+        .scale(y)
+        .tickSize(-width)
+        .tickPadding(8);
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + (height) + ")")
+        .call(xAxis);
+
+    svg.append("g")
+        .attr("class", "y axis")
+        .attr("transform", "translate(" + (width) + ",0)")
+        .call(yAxis);
+
+
+    function draw(subset) {
+
+      svg.selectAll("g.anscombe-circle-group").remove();
+
+      var circleGroup = svg.selectAll("g.anscombe-circle-group")
+          .data(subset)
+          .enter()
+            .append("g")
+            .attr("class", "anscombe-circle-group");
+
+      circleGroup
+          .append("circle")
+          .attr("r", 5)
+          .style("fill", function(d) {
+            console.log(d);
+            return colorScale(d.group);
+          });
+
+      circleGroup
+          .append("text")
+          .text(function(d) { return "(" + d.x + "," + d.y + ")"; })
+          .attr("dx", 6);
+
+
+      circleGroup
+          .transition()
+          .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+    }
+
+    function groupData(group_num) {
+      var subset = dataset.filter(function(d) {
+          return d.group == group_num;
+      })
+      draw(subset);
+    }
+
+    d3.selectAll(".button")
+      .on("click", function() {
+        var group_num = d3.select(this).text();
+        groupData(group_num);
+      });
+
+    var dataset;
+    d3.tsv("quartet.tsv", function(error, data) {
+      if (error) throw error;
+      dataset = data;
+      groupData("I");
+    })
+    </script>
+  </body>
+</head>

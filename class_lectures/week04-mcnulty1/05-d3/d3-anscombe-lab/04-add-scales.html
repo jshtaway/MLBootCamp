@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>D3: Enter Append</title>
+    <meta charset="utf-8">
+
+    <style type="text/css">
+      /*css to go here*/
+      svg {
+        border:1px solid #f0f;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script>
+    //JS to go here
+    var data = [
+      {"group": "II", "x":10, "y" : 9.14},
+      {"group": "II", "x":8, "y" : 8.14},
+      {"group": "II", "x":13, "y" : 8.74},
+      {"group": "II", "x":9, "y" : 8.77},
+      {"group": "II", "x":11, "y" : 9.26},
+      {"group": "II", "x":14, "y" : 8.1},
+      {"group": "II", "x":6, "y" : 6.13},
+      {"group": "II", "x":4, "y" : 3.1},
+      {"group": "II", "x":12, "y" : 9.13},
+      {"group": "II", "x":7, "y" : 7.26},
+      {"group": "II", "x":5, "y" : 4.74}
+    ];
+    var width = 720,
+      height = 400;
+
+    var x = d3.scaleLinear()
+        .range([0, width])
+        .domain([4, 15]);
+
+    var y = d3.scaleLinear()
+        .range([height, 0])
+        .domain([4, 20]);
+
+    var svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height);
+
+    var circleGroup = svg.selectAll(".anscombe-circle-group")
+        .data(data)
+      .enter()
+        .append("g")
+        .attr("class", "anscombe-circle-group")
+        .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+
+    circleGroup.append("circle")
+        .attr("r", 5);
+
+    circleGroup.append("text")
+        .text(function(d) { return "(" + d.x + "," + d.y + ")"; });
+    </script>
+  </body>
+</html>

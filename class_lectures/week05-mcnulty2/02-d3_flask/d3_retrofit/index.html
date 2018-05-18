@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+  body {
+    font-family: sans-serif; 
+  }
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #666666;
+    shape-rendering: crispEdges;
+  }
+  .axis text {
+    fill: #666666;
+    font-family: sans-serif;
+    font-size: 14px;
+  }
+  text.axis_title {
+    font-size: 15px;
+    fill: black;
+    font-weight: bold;
+  }
+  .node circle {
+    fill-opacity: 0.75;
+    stroke-opacity: 0.9;
+    stroke: #555555;
+    stroke-width: 1;
+  }
+  .node circle:hover {
+    fill-opacity: 1;
+    stroke-opacity: 1;
+    stroke-width: 2;
+    stroke: #444 !important;
+    z-index: 20;
+  }
+  .tooltip {
+    background-color: #f7f7f7;
+    padding: 3px 12px;
+    font-family: sans-serif;
+    border: 1px solid #bbbbbb;
+    box-shadow: 1px 1px 4px #bbbbbb;
+  }
+  .tooltip_title {
+    font-weight: bold;
+    font-size: 14px;
+    margin: 5px 0;
+    max-width: 300px;
+    word-wrap: normal;
+  }
+  .tooltip_body {
+    font-weight: normal;
+    margin: 5px 0;
+  }
+  .tooltip_img {
+    max-width: 240px;
+  }
+
+</style>
+<body>
+<script src="https://d3js.org/d3.v4.0.0-alpha.35.min.js"></script>
+<script>           
+var dimensions = { x: "price_per_ounce", r: "brewing_time", y: "brewing_amount" };
+var teaKeys = ["song", "redblossom"];
+var companyName = { "song": "song tea", "redblossom": "red blossom tea" };
+
+var margin = {top: 60, bottom: 100, right: 50, left: 100 },
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var x_axis,
+    y_axis;
+
+var x = d3.scaleLinear()
+    .range([0, width]);
+
+var y = d3.scaleLinear()
+    .range([height, 0]);
+
+var r = d3.scaleLinear()
+    .range([5,15]);
+
+var color = d3.scaleOrdinal()
+    .domain(teaKeys)
+    .range(["#6a3d9a", "#e31a1c"])
+
+var xAxis = d3.axisBottom(x)
+    .ticks(10, "$")
+
+var yAxis = d3.axisLeft(y)
+    .ticks(5, "%")
+    
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.right + margin.left)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+var tooltip = d3.select("body")
+    .append("div")
+    .attr("class", "tooltip")
+    .style("position", "absolute")
+    .style("z-index", "10")
+    .style("visibility", "hidden");
+
+var tea = {}, remaining = 2;
+d3.csv("song_scatter.csv", function(data) {
+  tea.song = data;
+  if (!--remaining) draw();
+});
+
+d3.csv("redblossom_scatter.csv", function(data) {
+  tea.redblossom = data;
+  if (!--remaining) draw();
+});
+
+function draw() {
+  teaKeys.forEach(function(company) {
+    tea[company] = tea[company].map(function(d) {
+      return {
+        company: company,
+        tea_name: d.tea,
+        brewing_amount: +d["brewing_amount(g)"],
+        brewing_temp: +d["brewing_temp(F)"],
+        brewing_time: +d["brewing_time(minutes)"] * 60,
+        brewing_volume: +d["brewing_volume(ml)"],
+        price_per_ounce: +d["price_per_oz($)"],
+        type: d.type,
+        location: d.location,
+        imgUrl: d.imgUrl
+      };
+    });
+  });
+
+  tea = tea.song.concat(tea.redblossom);
+
+  x.domain([0, d3.max(tea, function(d) { return d[dimensions.x]; } )]);
+  y.domain(d3.extent(tea, function(d) { return d[dimensions.y]/d["brewing_volume"]; }));
+  r.domain(d3.extent(tea, function(d) { return d[dimensions.r]; }));
+  
+  var simulation = d3.forceSimulation(tea)
+    .force("x", d3.forceX(function(d) { return x(d[dimensions.x]); }).strength(1))
+    .force("y", d3.forceY(function(d) { return y(d[dimensions.y]/d["brewing_volume"]); }).strength(1))
+    .force("collide", d3.forceCollide(12))
+    .stop();
+
+  for (var i = 0; i < 120; ++i) simulation.tick(); 
+
+  var node = svg.selectAll("g")
+    .data(tea)
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    
+  node
+    .append("circle")
+    .attr("cx", function(d) { return d.x; })
+    .attr("cy", function(d) { return d.y; })
+    .attr("r", function(d) { return r(d[dimensions.r]); })
+    .style("fill", function(d) { return color(d.company); })
+    
+    .on("mouseover", function(d) {
+       tooltip.html("");
+       tooltip.append("h3").attr("class", "tooltip_title");
+       tooltip.append("img").attr("class", "tooltip_img");
+       tooltip.append("pre").attr("class", "tooltip_body");
+       tooltip.select(".tooltip_title")
+         .text(d.tea_name)
+
+       tooltip.select("img")
+         .attr("src", d.imgUrl);
+
+       tooltip.select(".tooltip_body")
+         .text(
+           "company: " + companyName[d.company] + "\n" + 
+           "type: " + d.type + "\n" +
+           "price: $" + d.price_per_ounce + "/oz\n" + 
+           "brewing volume: " + d.brewing_volume + " ml\n" +
+           "brewing amount: " + d.brewing_amount + " grams\n" + 
+           "brewint temperature: " + d.brewing_temp + " °F\n" +   
+           "brewing time: " + d.brewing_time + " seconds\n"
+          );
+
+       return tooltip.style("visibility", "visible");
+     })
+     .on("mousemove", function() {
+       return tooltip.style("top", (d3.event.pageY-52) + "px").style("left", (d3.event.pageX+18) + "px");
+     })
+     .on("mouseout", function() {
+       return tooltip.style("visibility", "hidden");
+     });
+
+  // draw the axes
+  x_axis = svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis)
+    .append("text")
+    .attr("transform", "translate(655,50)")
+      .attr("class", "axis_title")
+      .text("Price per ounce")
+
+  y_axis = svg.append("g")
+    .attr("class", "y axis")
+    .attr("transform", "translate(0" + ",0)")
+    .call(yAxis)
+    .append("text")
+    .attr("transform", "translate(-60,170) rotate(-90)")
+      .attr("class", "axis_title")
+      .text("Leaf to water ratio per brew")  
+}
+
+</script>

@@ -1,0 +1,457 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html  xmlns="http://www.w3.org/1999/xhtml"
+       xml:lang="en-US"
+       lang="en-US">
+  <head profile="http://www.w3.org/2005/10/profile">
+    <title>Pie charts for False Positives</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="-l" />
+
+    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?2.4.5"></script>
+
+
+    <script type="text/javascript">
+
+      // This example lays out multiple interactive pie charts on a page with multiple HTML layout constructs.
+      // Created by Frank Guerino : "http://www.guerino.net"
+
+      // Data Used for this example...
+      var dataSet1 = [
+        {legendLabel: "Adult", magnitude: 777},
+        {legendLabel: "Young Adult", magnitude: 1145},
+        {legendLabel: "Youth", magnitude: 1089}];
+
+      var dataSet2 = [
+        {legendLabel: "12 Years", magnitude: 52},
+        {legendLabel: "13 Years", magnitude: 68},
+        {legendLabel: "14 Years", magnitude: 104},
+        {legendLabel: "15 Years", magnitude: 134},
+        {legendLabel: "16 Years", magnitude: 140},
+        {legendLabel: "17 Years", magnitude: 210},
+        {legendLabel: "18 Years", magnitude: 275}];
+
+
+      function drawPie( pieName, dataSet, selectString, colors, margin, outerRadius, innerRadius, sortArcs ) {
+
+	// pieName => A unique drawing identifier that has no spaces, no "." and no "#" characters.
+	// dataSet => Input Data for the chart, itself.
+	// selectString => String that allows you to pass in
+	//           a D3 select string.
+	// colors => String to set color scale.  Values can be...
+	//           => "colorScale10"
+	//           => "colorScale20"
+	//           => "colorScale20b"
+	//           => "colorScale20c"
+	// margin => Integer margin offset value.
+	// outerRadius => Integer outer radius value.
+	// innerRadius => Integer inner radius value.
+	// sortArcs => Controls sorting of Arcs by value.
+	//              0 = No Sort.  Maintain original order.
+	//              1 = Sort by arc value size.
+
+	// Color Scale Handling...
+        var colorScale = d3.scale.category20c();
+        switch (colors)
+        {
+          case "colorScale10":
+            colorScale = d3.scale.category10();
+            break;
+          case "colorScale20":
+            colorScale = d3.scale.category20();
+            break;
+          case "colorScale20b":
+            colorScale = d3.scale.category20b();
+            break;
+          case "colorScale20c":
+            colorScale = d3.scale.category20c();
+            break;
+          default:
+            colorScale = d3.scale.category20c();
+        };
+
+        var canvasWidth = 700;
+	var pieWidthTotal = outerRadius * 2;;
+	var pieCenterX = outerRadius + margin/2;
+	var pieCenterY = outerRadius + margin/2;
+        var legendBulletOffset = 30;
+        var legendVerticalOffset = outerRadius - margin;
+        var legendTextOffset = 20;
+        var textVerticalSpace = 20;
+
+	var canvasHeight = 0;
+        var pieDrivenHeight = outerRadius*2 + margin*2;
+        var legendTextDrivenHeight = (dataSet.length * textVerticalSpace) + margin*2;
+	// Autoadjust Canvas Height
+	if (pieDrivenHeight >= legendTextDrivenHeight)
+	{
+	  canvasHeight = pieDrivenHeight;
+	}
+	else
+	{
+	  canvasHeight = legendTextDrivenHeight;
+	}
+
+        var x = d3.scale.linear().domain([0, d3.max(dataSet, function(d) { return d.magnitude; })]).rangeRound([0, pieWidthTotal]);
+        var y = d3.scale.linear().domain([0, dataSet.length]).range([0, (dataSet.length * 20)]);
+
+
+        var synchronizedMouseOver = function() {
+          var arc = d3.select(this);
+          var indexValue = arc.attr("index_value");
+
+          var arcSelector = "." + "pie-" + pieName + "-arc-" + indexValue;
+          var selectedArc = d3.selectAll(arcSelector);
+          selectedArc.style("fill", "Maroon");
+
+          var bulletSelector = "." + "pie-" + pieName + "-legendBullet-" + indexValue;
+          var selectedLegendBullet = d3.selectAll(bulletSelector);
+          selectedLegendBullet.style("fill", "Maroon");
+
+          var textSelector = "." + "pie-" + pieName + "-legendText-" + indexValue;
+          var selectedLegendText = d3.selectAll(textSelector);
+          selectedLegendText.style("fill", "Maroon");
+        };
+
+        var synchronizedMouseOut = function() {
+          var arc = d3.select(this);
+          var indexValue = arc.attr("index_value");
+
+          var arcSelector = "." + "pie-" + pieName + "-arc-" + indexValue;
+          var selectedArc = d3.selectAll(arcSelector);
+          var colorValue = selectedArc.attr("color_value");
+          selectedArc.style("fill", colorValue);
+
+          var bulletSelector = "." + "pie-" + pieName + "-legendBullet-" + indexValue;
+          var selectedLegendBullet = d3.selectAll(bulletSelector);
+          var colorValue = selectedLegendBullet.attr("color_value");
+          selectedLegendBullet.style("fill", colorValue);
+
+          var textSelector = "." + "pie-" + pieName + "-legendText-" + indexValue;
+          var selectedLegendText = d3.selectAll(textSelector);
+          selectedLegendText.style("fill", "Blue");
+        };
+
+        var tweenPie = function (b) {
+          b.innerRadius = 0;
+          var i = d3.interpolate({startAngle: 0, endAngle: 0}, b);
+          return function(t) {
+            return arc(i(t));
+          };
+        }
+
+        // Create a drawing canvas...
+        var canvas = d3.select(selectString)
+          .append("svg:svg") //create the SVG element inside the <body>
+            .data([dataSet]) //associate our data with the document
+            .attr("width", canvasWidth) //set the width of the canvas
+            .attr("height", canvasHeight) //set the height of the canvas
+            .append("svg:g") //make a group to hold our pie chart
+              .attr("transform", "translate(" + pieCenterX + "," + pieCenterY + ")") // Set center of pie
+
+	// Define an arc generator. This will create <path> elements for using arc data.
+        var arc = d3.svg.arc()
+            .innerRadius(innerRadius) // Causes center of pie to be hollow
+            .outerRadius(outerRadius);
+
+	// Define a pie layout: the pie angle encodes the value of dataSet.
+	// Since our data is in the form of a post-parsed CSV string, the
+	// values are Strings which we coerce to Numbers.
+        var pie = d3.layout.pie()
+	    .value(function(d) { return d.magnitude; })
+	    .sort(function(a, b) {if (sortArcs==1) { return b.magnitude - a.magnitude; } else { return null; } });
+
+        // Select all <g> elements with class slice (there aren't any yet)
+        var arcs = canvas.selectAll("g.slice")
+          // Associate the generated pie data (an array of arcs, each having startAngle,
+          // endAngle and value properties)
+          .data(pie)
+          // This will create <g> elements for every "extra" data element that should be associated
+          // with a selection. The result is creating a <g> for every object in the data array
+          // Create a group to hold each slice (we will have a <path> and a <text>      // element associated with each slice)
+	  .enter().append("svg:a")
+            .attr("xlink:href", function(d) { return d.data.link; })
+            .append("svg:g")
+              .attr("class", "slice")    //allow us to style things in the slices (like text)
+              // Set the color for each slice to be chosen from the color function defined above
+              // This creates the actual SVG path using the associated data (pie) with the arc drawing function
+              .style("stroke", "White" )
+              .attr("d", arc);
+
+        arcs.append("svg:path")
+          // Set the color for each slice to be chosen from the color function defined above
+          // This creates the actual SVG path using the associated data (pie) with the arc drawing function
+          .attr("fill", function(d, i) { return colorScale(i); } )
+          .attr("color_value", function(d, i) { return colorScale(i); }) // Bar fill color...
+          .attr("index_value", function(d, i) { return "index-" + i; })
+          .attr("class", function(d, i) { return "pie-" + pieName + "-arc-index-" + i; })
+          .style("stroke", "White" )
+          .attr("d", arc)
+          .on('mouseover', synchronizedMouseOver)
+          .on("mouseout", synchronizedMouseOut)
+          .transition()
+            .ease("bounce")
+            .duration(2000)
+            .delay(function(d, i) { return i * 50; })
+            .attrTween("d", tweenPie);
+
+        // Add a magnitude value to the larger arcs, translated to the arc centroid and rotated.
+        arcs.filter(function(d) { return d.endAngle - d.startAngle > .2; }).append("svg:text")
+          .attr("dy", ".35em")
+          .attr("text-anchor", "middle")
+          //.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")rotate(" + angle(d) + ")"; })
+          .attr("transform", function(d) { //set the label's origin to the center of the arc
+            //we have to make sure to set these before calling arc.centroid
+            d.outerRadius = outerRadius; // Set Outer Coordinate
+            d.innerRadius = innerRadius; // Set Inner Coordinate
+            return "translate(" + arc.centroid(d) + ")rotate(" + angle(d) + ")";
+          })
+          .style("fill", "White")
+          .style("font", "normal 12px Arial")
+          .text(function(d) { return d.data.legendLabel; });
+
+        // Computes the angle of an arc, converting from radians to degrees.
+        function angle(d) {
+          var a = (d.startAngle + d.endAngle) * 90 / Math.PI - 90;
+          return a > 90 ? a - 180 : a;
+        }
+
+        // Plot the bullet circles...
+        canvas.selectAll("circle")
+          .data(dataSet).enter().append("svg:circle") // Append circle elements
+          .attr("cx", pieWidthTotal + legendBulletOffset)
+          .attr("cy", function(d, i) { return i*textVerticalSpace - legendVerticalOffset; } )
+          .attr("stroke-width", ".5")
+          .style("fill", function(d, i) { return colorScale(i); }) // Bullet fill color
+          .attr("r", 5)
+          .attr("color_value", function(d, i) { return colorScale(i); }) // Bar fill color...
+          .attr("index_value", function(d, i) { return "index-" + i; })
+          .attr("class", function(d, i) { return "pie-" + pieName + "-legendBullet-index-" + i; })
+          .on('mouseover', synchronizedMouseOver)
+          .on("mouseout", synchronizedMouseOut);
+
+        function update(data) {
+          var update = svg.selectAll(circles)
+            .data(dataSet, function (d) {return d})
+
+          var enter = update.enter()
+            .append('circle')
+          var exit = update.exit()
+        }
+        // Create hyper linked text at right that acts as label key...
+        canvas.selectAll("a.legend_link")
+          .data(dataSet) // Instruct to bind dataSet to text elements
+          .enter().append("svg:a") // Append legend elements
+            .attr("xlink:href", function(d) { return d.link; })
+            .append("text")
+              .attr("text-anchor", "center")
+              .attr("x", pieWidthTotal + legendBulletOffset + legendTextOffset)
+              //.attr("y", function(d, i) { return legendOffset + i*20 - 10; })
+          //.attr("cy", function(d, i) {    return i*textVerticalSpace - legendVerticalOffset; } )
+              .attr("y", function(d, i) { return i*textVerticalSpace - legendVerticalOffset; } )
+              .attr("dx", 0)
+              .attr("dy", "5px") // Controls padding to place text in alignment with bullets
+              .text(function(d) { return d.legendLabel;})
+              .attr("color_value", function(d, i) { return colorScale(i); }) // Bar fill color...
+              .attr("index_value", function(d, i) { return "index-" + i; })
+              .attr("class", function(d, i) { return "pie-" + pieName + "-legendText-index-" + i; })
+              .style("fill", "Blue")
+              .style("font", "normal 1.5em Arial")
+              .on('mouseover', synchronizedMouseOver)
+              .on("mouseout", synchronizedMouseOut);
+
+      };
+
+    </script>
+
+    <style type="text/css">
+      svg {
+        font: 10px sans-serif;
+        display: block;
+      }
+    </style>
+
+
+
+    <STYLE type="text/css">
+      div.div_Header {
+	width: 100%;
+	border:2px solid White;
+	border-radius:7px;
+	background: WhiteSmoke;
+	font: bold 14px Arial;
+	font-family:Arial, Helvetica, sans-serif;
+	color:WhiteSmoke;
+	text-align:center;
+      }
+      h1.h1_BodyHeader {
+	text-align:center;
+	font: bold 1.5em Arial;
+      }
+      h2.h2_LeftMenuHeader {
+	text-align:center;
+	font: bold 1.2em Arial;
+      }
+      h3.h3_Body {
+        text-align:center;
+      }
+      p.p_Red {
+        color:Red;
+      }
+      table.table_Header {
+	width: 100%;
+	text-align:center;
+      }
+      td.td_HeaderLeft {
+	text-align:left;
+      }
+      td.td_HeaderRight {
+	text-align:right;
+      }
+      div.div_Menu {
+	width: 100%;
+	border:2px solid White;
+	border-radius:7px;
+	background: MidnightBlue;
+	font: bold 14px Arial;
+	font-family:Arial, Helvetica, sans-serif;
+	color:White;
+	text-align:center;
+      }
+      p.p_Left {
+        font-family:Arial, Helvetica, sans-serif;
+        color:Black;
+        text-align:left;
+        padding-left: 5px;
+        font: normal 14px Arial;
+      }
+      table.table_Body {
+	width: 100%;
+	height: 100%;
+	padding: 0;
+      }
+      td.td_BodyLeft {
+	width: 250px;
+	height: 100%;
+	padding: 0;
+      }
+      li.li_LeftMenu {
+	text-align:left;
+	font: normal 14px Arial;
+      }
+      a.a_LeftMenuNoUnderLine {
+	text-decoration:  none;
+      }
+      div.div_Body {
+	height: 100%;
+	width: 100%;
+	position: relative;
+	border:2px solid White;
+	border-radius:7px;
+	background: WhiteSmoke;
+	font: bold 14px Arial;
+	font-family:Arial, Helvetica, sans-serif;
+	color:Black;
+	text-align:center;
+      }
+      div.div_Footer {
+	width: 100%;
+	border:2px solid White;
+	border-radius:7px;
+	background: MidnightBlue;
+	font: bold 14px Arial;
+	font-family:Arial, Helvetica, sans-serif;
+	color:White;
+	text-align:center;
+      }
+      p.p_if4itMessage {
+	width: 100%;
+	background: White;
+	font: bold .75em Arial;
+	font-family:Arial, Helvetica, sans-serif;
+	color:GoldenRod;
+	text-align:center;
+      }
+      .menuButton{
+        background-color: MidnightBlue;
+      }
+      .menuButton li{
+	height: 100%;
+	list-style: none;
+	display: inline;
+      }
+      .menuButton li a{
+	height: 100%;
+	padding: 3px 0.5em;
+	text-decoration: none;
+	color: White;
+	background-color: MidnightBlue;
+	border: 2px solid MidnightBlue;
+      }
+      .menuButton li a:hover{
+	height: 100%;
+	color: MidnightBlue;
+	background-color: White;
+	border-style: outset;
+	background-color: White;
+      }
+      .menuButton li a:active{
+        height: 100%;
+        border-style: inset;
+        color: MidnightBlue;
+        background-color: White;
+      }
+      .menuButton li a.disabled{
+        height: 100%;
+        padding: 3px 0.5em;
+        text-decoration: none;
+        color: MidnightBlue;
+        background-color: White;
+        border: 2px solid MidnightBlue;
+        border-style: inset;
+        border-color: White;
+      }
+    </STYLE>
+
+    <STYLE type="text/css">
+      div.div_RootBody {
+	position: relative;
+	border:2px solid White;
+	border-radius:7px;
+	background: WhiteSmoke;
+	font: normal 14px Arial;
+	font-family:Arial, Helvetica, sans-serif;
+	color:Black;
+	padding: 0px 1em;
+	text-align:left;
+      }
+    </STYLE>
+    <!--[if gt IE 7]>
+      <style>body { overflow-y:scroll; } </style>
+    <![endif]-->
+  </head>
+
+  <body>
+
+      <table class="table_Body">
+        <tr>
+          <td>
+            <div class="div_RootBody" id="pie_chart_1">
+              <h3 class="h3_Body">False Positives, Youth data</h3>
+              <div class="chart"></div>
+            </div>
+
+          </td>
+        </tr>
+      </table>
+
+      <script type="text/javascript">
+        drawPie("Pie1", dataSet2, "#pie_chart_1 .chart", "colorScale20", 10, 150, 5, 0);
+      </script>
+
+    </body>
+
+</html>

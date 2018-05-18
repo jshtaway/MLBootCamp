@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<head>
+<meta charset='utf-8'>
+</head>
+
+  <body>
+  <h1>Profile of Account Holders by Account Type for December 2015<h1>
+  <svg width="960" height="960" font-family="sans-serif" font-size="10" text-anchor="middle"></svg>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="{{url_for('static', filename='script.js')}}"></script>
+    
+	<script>
+	 createGraph('static/df_savings_clean.csv');
+	</script>
+	
+	</p>
+		<button type="button" onclick="window.location.href='{{ url_for( 'predict' ) }}';">Predict Page</button>
+		<button type="button" onclick="window.location.href='{{ url_for( 'index' ) }}';">Home</button>
+	<p>
+  </body>
+
+

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <style>
+  @import url('https://fonts.googleapis.com/css?family=Lato');
+    
+    body{
+      font-family: 'Helvetica Neue Light', Helvetica,sans-serif;
+      background-color: #FBFBFB;
+      margin: 0 auto;
+      text-align:center; 
+    }
+
+    h2, h3 {
+      font-family: 'Lato', Helvetica, sans-serif;
+      margin: 0 auto;
+      text-align:center;
+    }
+
+
+  .countries{
+    stroke: #fff;
+    stroke-width: .5px;
+  }
+
+  #map, .map{
+    position:fixed;
+    top:100;
+    left: 0;
+    z-index:-1;
+  }
+
+  </style>
+</head>
+
+<body onload="sizeChange()">
+
+  <div id="container"></div>
+
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://d3js.org/topojson.v2.min.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="https://d3js.org/d3-geo-projection.v1.min.js"></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js'></script>
+  <script src="functions.js"></script>
+
+  <script>
+
+  //////////////////////////////////////////////////////////////////////
+    
+  function sizeChange() {
+      d3.select("g").attr("transform", "scale(" + $("#container").width()/900 + ")");
+      $("svg").height($("#container").width()*0.618);}
+
+    d3.select(window)
+          .on("resize", sizeChange);
+
+ //////////////////////////////////////////////////////////////////////
+
+    var headline = "terror incidents per nation each year";
+    var init_year = 2016;
+    var color_na = d3.rgb("#d4d4d4");
+
+    //headline
+    d3.select("#container").insert("h2")
+    .attr('id', 'headline')
+    .style('font-size', '30pt')
+    .text(headline);
+
+    //year
+    d3.select("#container").insert("h3",)
+    .attr('id', 'yeartxt')
+    .style('font-size', '20pt')
+    .text(init_year);
+
+    // slider
+    d3.select("#container").insert("p").append("input")
+        .attr("position","absolute")
+        .attr("type", "range")
+        .attr("min", "1970")
+        .attr("max", "2016")
+        .attr("value", init_year)
+        .attr("id", "year");
+
+    // init map container, projection
+    var path = d3.geoPath(d3.geoRobinson());
+    var svg_map = d3.select("#container").append("svg")
+                  .attr("id", "map")
+                  .attr("height", 425)
+                  .attr("width", '100%')
+                  .append('g');
+
+    // load data
+    d3.json("data.json", function(d) {
+      let data_all = d['Terror'];
+      let data = data_all[init_year];
+      let color = calcColorScale(data);
+
+      // load map data and render it 
+      d3.json("world.json", function(worldmap) {
+        // init map
+        svg_map.append("g")
+          .attr("class", "countries")
+          .selectAll("path")
+          .data(topojson.feature(worldmap, worldmap.objects.world).features)
+          
+          .enter().append("path")
+            .attr("d", path)
+            .attr("id", function(d) {return d.id;})
+            .call(fillMap, color, data); });
+
+      // was the slider used?
+        d3.select("#year").on("input", function() {
+            let upd_color = calcColorScale(data_all[this.value]);
+            updateMap(upd_color, data_all[this.value]); });
+
+    }); 
+
+  </script>
+</body>
+</html>

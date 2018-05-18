@@ -1,0 +1,226 @@
+<!-- Our final File --> 
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="utf-8">
+<style>
+  body 
+    font-family: sans-serif; 
+  }
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #666666;
+    shape-rendering: crispEdges;
+  }
+  .axis text {
+    fill: #666666;
+    font-family: sans-serif;
+    font-size: 14px;
+  }
+  text.axis_title {
+    font-size: 15px;
+    fill: black;
+    font-weight: bold;
+  }
+  .node circle {
+    fill-opacity: 0.75;
+    stroke-opacity: 0.9;
+    stroke: #555555;
+    stroke-width: 1;
+  }
+  .node circle:hover {
+    fill-opacity: 1;
+    stroke-opacity: 1;
+    stroke-width: 2;
+    stroke: #444 !important;
+    z-index: 20;
+  }
+  .tooltip {
+    background-color: #f7f7f7;
+    padding: 3px 12px;
+    font-family: sans-serif;
+    border: 1px solid #bbbbbb;
+    box-shadow: 1px 1px 4px #bbbbbb;
+  }
+  .tooltip_title {
+    font-weight: bold;
+    font-size: 14px;
+    margin: 5px 0;
+    max-width: 300px;
+    word-wrap: normal;
+  }
+  .tooltip_body {
+    font-weight: normal;
+    margin: 5px 0;
+  }
+  .tooltip_img {
+    max-width: 240px;
+  }
+
+</style>
+<body>
+<script src="https://d3js.org/d3.v4.0.0-alpha.35.min.js"></script>
+<script>           
+var dimensions = { x: "price_per_ounce", r: "brewing_time", y: "brewing_amount" };
+var teaKeys = ["yelp ratings"];
+var companyName = { "song": "song tea", "redblossom": "red blossom tea" };
+
+var margin = {top: 60, bottom: 100, right: 50, left: 100 },
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var x_axis,
+    y_axis;
+
+var x = d3.scaleLinear()
+    .range([0, width]);
+
+var y = d3.scaleLinear()
+    .range([height, 0]);
+
+var r = d3.scaleLinear()
+    .range([5,15]);
+
+var color = d3.scaleOrdinal()
+    .domain(teaKeys)
+    .range(["#6a3d9a", "#e31a1c"])
+
+var xAxis = d3.axisBottom()
+    .scale(x);
+
+var yAxis = d3.axisLeft()
+    .scale(y);
+    
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.right + margin.left)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+var tooltip = d3.select("body")
+    .append("div")
+    .attr("class", "tooltip")
+    .style("position", "absolute")
+    .style("z-index", "10")
+    .style("visibility", "hidden");
+
+var tea = {}, remaining = 2;
+d3.csv("bk_data.csv", function(error,data) {
+
+data.forEach(function(d) {
+    d.name = d.name;
+    d.add = d.add;
+    d.long = +d.long;
+    d.lat = +d.lat;
+    d.yelp=+d.yelps;
+    d.what = d.what;
+    d.img = d.img;
+
+});
+
+  
+
+ x.domain(d3.extent(data, function(d) { return d.long; })).nice();
+ y.domain(d3.extent(data, function(d) { return d.lat; })).nice();
+ 
+  
+ var simulation = d3.forceSimulation(data)
+    .force("x", d3.forceX(function(d) { return x(d[dimensions.x]); }).strength(1))
+    .force("y", d3.forceY(function(d) { return y(d[dimensions.y]); }).strength(1))
+    .force("collide", d3.forceCollide(12))
+    .stop();
+
+  for (var i = 0; i < 120; ++i) simulation.tick(); 
+
+  // add legend
+  var legend = svg.selectAll(".legend")
+      .data(color.domain())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
+
+  var node = svg.selectAll("g")
+    .data(data)
+    .enter()
+    .append("g")
+    .attr("class", "node")
+    
+  node
+    .append("circle")
+    .attr("cx", function(d) { return x(d.long); })
+    .attr("cy", function(d) { return y(d.lat); })
+    .attr("r", function(d) { return 1.75*(d.yelps); })
+    .style("fill", "#6a3d9a")
+    
+    .on("mouseover", function(d) {
+       tooltip.html("");
+       tooltip.append("h3").attr("class", "tooltip_title");
+       tooltip.append("img").attr("class", "tooltip_img");
+       tooltip.append("pre").attr("class", "tooltip_body");
+       tooltip.select(".tooltip_title")
+         .text(d.name)
+
+       tooltip.select("img")
+         .attr("src", d.img);
+
+       tooltip.select(".tooltip_body")
+         .text( 
+           "company: " + d.name + "\n" + 
+           "address: " + d.add + "\n" +
+           "what it is: " + d.what 
+          );
+       return tooltip.style("visibility", "visible");
+     })
+     .on("mousemove", function() {
+       return tooltip.style("top", (d3.event.pageY-52) + "px").style("left", (d3.event.pageX+18) + "px");
+     })
+     .on("mouseout", function() {
+       return tooltip.style("visibility", "hidden");
+     });
+
+  // draw the axes
+  x_axis = svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis)
+    .append("text")
+    .attr("transform", "translate(655,50)")
+      .attr("class", "axis_title")
+      .text("Longitude")
+
+  y_axis = svg.append("g")
+    .attr("class", "y axis")
+    .attr("transform", "translate(0" + ",0)")
+    .call(yAxis)
+    .append("text")
+    .attr("transform", "translate(-60,170) rotate(-90)")
+      .attr("class", "axis_title")
+      .text("Latitude")  
+});
+
+// Add Title
+svg.append("text")
+        .attr("x", (width / 2))             
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .style("text-decoration", "underline")  
+        .text("Small Biz in Brooklyn");
+
+</script>
